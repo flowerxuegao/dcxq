@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  
+  <link rel="stylesheet" href="css/layui.css"  media="all">
+ <link rel="stylesheet" href="css/mui.min.css">
+  <style>
+	  body,html{
+		  width: 100%;
+		  height: 100%;
+		  margin:0;
+		  padding:0;
+	  }
+	  *{
+		  box-sizing: border-box;
+	  }
+	  ul,li{
+		  margin:0;
+		  padding:0;
+		  list-style: none;
+	  }
+	  .layui-timeline-axis{
+		  background-color: #2381DD;
+		  color: #2381DD;
+	  }
+	  .contain{
+		  padding:10px;
+		  box-sizing: border-box;
+	  }
+	  .layui-timeline-item:before, hr{
+		  background: #59A0E5;
+	  }
+	  .layui-timeline{
+		  padding-left: 60px;
+	   }
+	   .layui-text h3{
+		   position: absolute;
+		   left: -60px;
+	   }
+	   .layui-text .imgBox li{
+		   list-style: none;
+		   width: 22%;
+		   margin-right: 1%;
+	   }
+	   .layui-text .imgBox li img{
+		   width: 100%;
+	   }
+	   .layui-text .imgBox{
+		   padding:0;
+		   display: flex;
+		   flex-wrap: wrap;
+		   justify-content: space-between;
+	   }
+	   .itemDescribe{
+		   color:#ccc;
+	   }
+	   .layui-text>ul>li{
+		   list-style: none;
+	   }
+	   .layui-text>ul{
+		   padding:0
+	   }
+	   .viewer-title,.viewer-one-to-one,.viewer-reset,.viewer-play,.viewer-rotate-left,.viewer-rotate-right,.viewer-flip-vertical,.viewer-flip-horizontal{
+		   display: none;
+	   }
+	   .viewer-toolbar{
+		   width: 125px;
+	   }
+	   
+	   
+	   .mui-preview-image.mui-fullscreen {
+	   	position: fixed;
+	   	z-index: 20;
+	   	background-color: #000;
+	   }
+	   
+	   .mui-preview-header,
+	   .mui-preview-footer {
+	   	position: absolute;
+	   	width: 100%;
+	   	left: 0;
+	   	z-index: 10;
+	   }
+	   
+	   .mui-preview-header {
+	   	height: 44px;
+	   	top: 0;
+	   }
+	   
+	   .mui-preview-footer {
+	   	height: 50px;
+	   	bottom: 0px;
+	   }
+	   
+	   .mui-preview-header .mui-preview-indicator {
+	   	display: block;
+	   	line-height: 25px;
+	   	color: #fff;
+	   	text-align: center;
+	   	margin: 15px auto 4;
+	   	width: 70px;
+	   	background-color: rgba(0, 0, 0, 0.4);
+	   	border-radius: 12px;
+	   	font-size: 16px;
+	   }
+	   
+	   .mui-preview-image {
+	   	display: none;
+	   	-webkit-animation-duration: 0.5s;
+	   	animation-duration: 0.5s;
+	   	-webkit-animation-fill-mode: both;
+	   	animation-fill-mode: both;
+	   }
+	   
+	   .mui-preview-image.mui-preview-in {
+	   	-webkit-animation-name: fadeIn;
+	   	animation-name: fadeIn;
+	   }
+	   
+	   .mui-preview-image.mui-preview-out {
+	   	background: none;
+	   	-webkit-animation-name: fadeOut;
+	   	animation-name: fadeOut;
+	   }
+	   
+	   .mui-preview-image.mui-preview-out .mui-preview-header,
+	   .mui-preview-image.mui-preview-out .mui-preview-footer {
+	   	display: none;
+	   }
+	   
+	   .mui-zoom-scroller {
+	   	position: absolute;
+	   	display: -webkit-box;
+	   	display: -webkit-flex;
+	   	display: flex;
+	   	-webkit-box-align: center;
+	   	-webkit-align-items: center;
+	   	align-items: center;
+	   	-webkit-box-pack: center;
+	   	-webkit-justify-content: center;
+	   	justify-content: center;
+	   	left: 0;
+	   	right: 0;
+	   	bottom: 0;
+	   	top: 0;
+	   	width: 100%;
+	   	height: 100%;
+	   	margin: 0;
+	   	-webkit-backface-visibility: hidden;
+	   }
+	   
+	   .mui-zoom {
+	   	-webkit-transform-style: preserve-3d;
+	   	transform-style: preserve-3d;
+	   }
+	   
+	   .mui-slider .mui-slider-group .mui-slider-item img {
+	   	width: auto;
+	   	height: auto;
+	   	max-width: 100%;
+	   	max-height: 100%;
+	   }
+	   
+	   .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+	   	width: 100%;
+	   }
+	   
+	   .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+	   	display: inline-table;
+	   }
+	   
+	   .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+	   	display: table-cell;
+	   	vertical-align: middle;
+	   }
+	   
+	   .mui-preview-loading {
+	   	position: absolute;
+	   	width: 100%;
+	   	height: 100%;
+	   	top: 0;
+	   	left: 0;
+	   	display: none;
+	   }
+	   
+	   .mui-preview-loading.mui-active {
+	   	display: block;
+	   }
+	   
+	   .mui-preview-loading .mui-spinner-white {
+	   	position: absolute;
+	   	top: 50%;
+	   	left: 50%;
+	   	margin-left: -25px;
+	   	margin-top: -25px;
+	   	height: 50px;
+	   	width: 50px;
+	   }
+	   
+	   .mui-preview-image img.mui-transitioning {
+	   	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+	   	transition: transform 0.5s ease, opacity 0.5s ease;
+	   }
+	   
+	   @-webkit-keyframes fadeIn {
+	   	0% {
+	   		opacity: 0;
+	   	}
+	   
+	   	100% {
+	   		opacity: 1;
+	   	}
+	   }
+	   
+	   @keyframes fadeIn {
+	   	0% {
+	   		opacity: 0;
+	   	}
+	   
+	   	100% {
+	   		opacity: 1;
+	   	}
+	   }
+	   
+	   @-webkit-keyframes fadeOut {
+	   	0% {
+	   		opacity: 1;
+	   	}
+	   
+	   	100% {
+	   		opacity: 0;
+	   	}
+	   }
+	   
+	   @keyframes fadeOut {
+	   	0% {
+	   		opacity: 1;
+	   	}
+	   
+	   	100% {
+	   		opacity: 0;
+	   	}
+	   }
+	   
+	   .img {
+	   	max-width: 100%;
+	   	height: auto;
+	   }
+	   
+	   
+  </style>
+</head>
+<body>
+	<div class="contain mui-content">
+	
+		<ul class="layui-timeline">
+		  <li class="layui-timeline-item">
+			<i class="layui-icon layui-timeline-axis"></i>
+			<div class="layui-timeline-content layui-text">
+			  <h3 class="layui-timeline-title">10:00</h3>
+			  <div class = "listTile">1工作负责人到场</div>
+			  <ul>
+				   <li>
+					  <div class="itemtitle">现场照片</div>
+					  <ul class = "imgBox" id="jq22">
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+					  </ul>
+				   </li>
+				   <li>
+					  <div class="itemtitle">到岗到位表</div>	
+					  <ul class = "imgBox">
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+					  </ul>
+				    </li>
+					<li>
+					  <div class="itemtitle">现场措施</div>
+					  <div class="itemDescribe">问题描述</div>
+					  <ul class = "imgBox">
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+					  </ul>
+					 </li>
+					 <li>
+					   <div class="itemtitle">现场问题</div>
+					   <div class="itemDescribe">问题描述</div>
+					   <ul class = "imgBox">
+					 	  <li><img src="img/0.gif" alt=""></li>
+					 	  <li><img src="img/0.gif" alt=""></li>
+					 	  <li><img src="img/0.gif" alt=""></li>
+					 	  <li><img src="img/0.gif" alt=""></li>
+					   </ul>
+					  </li>
+			  </ul>
+			</div>
+		  </li>
+		  <li class="layui-timeline-item">
+			<i class="layui-icon layui-timeline-axis"></i>
+			<div class="layui-timeline-content layui-text">
+			  <h3 class="layui-timeline-title">10:00</h3>
+			  <div class = "listTile">2工作负责人到场</div>
+			  <ul>
+				   <li>
+					  <div class="itemtitle">现场照片</div>
+					  <ul class = "imgBox" id="jq22">
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+						  <li><img class="img" src="img/0.gif" alt="" data-preview-src="" data-preview-group="1"></li>
+					  </ul>
+				   </li>
+				   <li>
+					  <div class="itemtitle">到岗到位表</div>	
+					  <ul class = "imgBox">
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+					  </ul>
+					</li>
+					<li>
+					  <div class="itemtitle">现场措施</div>
+					  <div class="itemDescribe">问题描述</div>
+					  <ul class = "imgBox">
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+					  </ul>
+					 </li>
+					 <li>
+					   <div class="itemtitle">现场问题</div>
+					   <div class="itemDescribe">问题描述</div>
+					   <ul class = "imgBox">
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+						  <li><img src="img/0.gif" alt=""></li>
+					   </ul>
+					  </li>
+			  </ul>
+			</div>
+		  </li>
+		  
+		</ul>  
+	</div>
+<script src = "js/jquery-2.1.4.min.js"></script>
+<script src = "js/mui.min.js"></script>
+<script src="js/layui.js" charset="utf-8"></script>
+<script src = "js/mui.previewimage.js"></script>
+<script src = "js/mui.zoom.js"></script>
+
+<script>
+
+	mui.previewImage();
+	var jhId = 45;
+	function GetQueryString(name)
+	{
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+	GetQueryString("jhId");
+	var getUrl = "116.62.19.7:8092";
+	$.ajax({
+		url:"/api/jhXcPresentRecord?jhId="+jhId,
+		dataType:"json",
+		success:function(data){
+			console.log(data);
+			
+			
+			
+		}
+	})
+	
+</script>
+
+</body>
+</html>
